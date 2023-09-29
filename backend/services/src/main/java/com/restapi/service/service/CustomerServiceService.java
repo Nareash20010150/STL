@@ -25,7 +25,9 @@ public class CustomerServiceService {
 
             customerServiceRepository.save(customerService);
         }else{
-            customerServiceRepository.findByCustomeridandEnable(userid,serviceid);
+            CustomerService customerService = customerServiceRepository.findByCustomeridAndServiceid(userid,serviceid);
+            customerService.setStatus("enable");
+            customerServiceRepository.save(customerService);
         }
     }
 
