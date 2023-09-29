@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "service", schema = "public")
+@Table(name = "networkservice", schema = "public")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,6 +19,10 @@ public class NetService {
 
     private String name;
     private String categeroy;
+
+    @ManyToOne
+    @JoinColumn(name = "technology_id", referencedColumnName = "id")
+    private NetTechnology technology;
 
     public NetService(String name, String categeroy) {
         this.name = name;
