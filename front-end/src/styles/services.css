@@ -1,0 +1,150 @@
+/* service head */
+
+.my-serivice-head-container{
+    margin-bottom: 30px;
+}
+
+.my-serivice-head-container-col-1{
+    width: 50%;
+}
+
+.my-serivice-head-container-col-2{
+    width: 50%;
+}
+
+.my-serivice-head-container-col-2-btn {
+    float: right;
+}
+
+@media only screen and (max-width: 625px) {
+    .my-serivice-head-container-col-1 {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .my-serivice-head-container-col-2 {
+        width: 100%;
+        flex:none;
+    }
+
+    .my-serivice-head-container-col-2-btn {
+        float: none;
+    }
+
+    .my-serivice-head-container {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 30px;
+    }
+
+    .my-serivice-head-container-col-2-btn{
+        font-size: 13px;
+    }
+}
+
+.my-serivice-head-container-col-1-span{
+    font-size: 28px;
+    font-weight: 500;
+    color: #333;
+}
+
+.my-serivice-head-container-col-1-no{
+    font-size: 22px;
+    font-weight: 500;
+    color: #333;
+    margin-left: 20px;
+    padding: 2px 6px;
+}
+
+
+
+
+
+/* service table */
+
+/* /* .my-service-table{
+    width: 100%;
+} */
+
+.my-service-table thead tr th{
+    padding: 10px 0px 10px 0px;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: 500;
+    color: #333;
+    /* font-size:1.1rem; */
+    font-family: 'Rubik', sans-serif;
+    color:white;
+    background: #23688e;
+}
+
+.my-service-table tbody tr td {
+    padding: 10px 0px 10px 0px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: 400;
+    color: #333;
+    /* font-size:1rem; */
+    font-family: 'Rubik', sans-serif;
+}
+
+.my-service-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+
+
+.my-service-table-btn {
+    background-color: #292D32;
+    margin-left: 4px;
+    margin-right: 4px;
+    padding: 7px !important;
+    border: 0px !important;
+    line-height: 15px !important;
+    text-transform: lowercase !important;
+    font-weight: 400 !important;
+}
+
+
+.my-service-table-th-1{
+    width: 25%;
+}
+
+.my-service-table-th-2{
+    width: 25%;
+}
+
+
+@media screen and (max-width: 471px) {
+    .my-service-table-btn {
+        margin-bottom: 3px;
+        margin-top: 3px;
+        text-align: center;
+    }
+
+    .my-service-table-btn {
+        background-color: #292D32;
+        padding: 5px !important;
+    }
+
+    .my-service-table-icon{
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 1021px) {
+    .my-serivice-head-container-col-1-span {
+        font-size: 22px;
+        font-weight: 500;
+        color: #333;
+    }
+
+    .my-serivice-head-container-col-1-no {
+        font-size: 18px;
+        font-weight: 500;
+        color: #333;
+        margin-left: 20px;
+        padding: 2px 6px;
+    }
+}
