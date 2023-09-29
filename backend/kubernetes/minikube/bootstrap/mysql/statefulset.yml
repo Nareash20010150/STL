@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  serviceName: mysql
+  replicas: 1
+  template:
+    metadata:
+      name: mysql
+      labels:
+        app: mysql
+    spec:
+      volumes:
+        - name: mysql
+          persistentVolumeClaim:
+            claimName: mysql-pc-volume-claim
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mysql
+          envFrom:
+            - configMapRef:
+                name: mysql-config
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: mysql

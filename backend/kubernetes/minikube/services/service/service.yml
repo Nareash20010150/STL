@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: item
+spec:
+  selector:
+    app: item
+  ports:
+    - port: 6002
+      targetPort: 6002
+  type: LoadBalancer

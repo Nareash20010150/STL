@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS netService;
+
+CREATE DATABASE netService;
