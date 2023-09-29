@@ -1,0 +1,60 @@
+### Test user service
+GET http://localhost:6001/api/user/test
+
+### Register user as seller
+POST http://localhost:6001/api/user/register
+Content-Type: application/json
+
+{
+  "username": "vishnugan",
+  "firstName": "Balakrishnan",
+  "lastName": "Vishnugan",
+  "phone": "0760866820",
+  "address": "Cahavakachcheri",
+  "email": "vishnuganb@gmail.com",
+  "password": "test123"
+}
+
+### Register user as buyer
+POST http://localhost:6001/api/user/register
+Content-Type: application/json
+
+{
+  "username": "karthi",
+  "firstName": "Kamalakanan",
+  "lastName": "Karthikejan",
+  "phone": "077123456",
+  "address": "Jaffna",
+  "email": "karthi@gmail.com",
+  "password": "test123"
+}
+
+### Register user as admin
+POST http://localhost:6001/api/user/register
+Content-Type: application/json
+
+{
+  "username": "admin1",
+  "firstName": "admin",
+  "lastName": "admin",
+  "phone": "0771234567",
+  "address": "Jaffna",
+  "email": "admin@gmail.com",
+  "password": "admin123"
+}
+
+### Login user
+POST http://localhost:6001/api/user/login
+Content-Type: application/json
+
+{
+  "email": "vishnuganb@gmail.com",
+  "password": "test123"
+}
+
+### Get user details by id
+GET http://localhost:6001/api/user?userId=0
+
+### Microservice Support
+### Get user details
+GET http://localhost:6001/api/user/support?userId=1
