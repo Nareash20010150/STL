@@ -1,0 +1,29 @@
+server:
+  port:
+    6002
+
+spring:
+  application:
+    name:
+      item
+  datasource:
+    url: jdbc:mysql://mysql:3306/service
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create # when kubernetes service>replicas is more than 1, make this as update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+    show-sql: true
+
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://eureka-server:8761/eureka
+#    fetch-registry: true
+#    register-with-eureka: true
+#    enabled: false
