@@ -52,7 +52,7 @@ const Bill = () => {
             <BsBank size={40} />
           </CardBody>
           <CardFooter pl={20} bgColor="green.100">
-            <b>Bank transfer</b>
+            <b>Rewords</b>
           </CardFooter>
         </Card>
         <Card
@@ -73,29 +73,23 @@ const Bill = () => {
           <FormControl>
             <Heading>Phone Bill Payment</Heading>
             <br />
-            <FormLabel>Select Account: </FormLabel>
-            <Select placeholder="Select option">
-              <option value="Account1">0916634814</option>
-              <option value="Account2">0927215212</option>
-            </Select>
-            <br />
             <FormLabel>Select Service Provider:</FormLabel>
             <br />
             <Select placeholder="Select option">
               <option value="Mobitel">Mobitel</option>
-              <option value="Dialog">Dialog</option>
-              <option value="Airtel">Airtel</option>
             </Select>
             <br />
-            <FormLabel>Mobile Number:</FormLabel>
+            <FormLabel>NIC:</FormLabel>
+            <Input type="text" placeholder="NIC" /> <br />
             <br />
+            <FormLabel>Enter Phone Number</FormLabel>
             <Input type="number" placeholder="Number" /> <br />
             <br />
             <FormLabel>Amount(LKR)</FormLabel>
             <br />
             <Input type="number" placeholder="Amount" /> <br />
             <Button colorScheme="blue" ml={40}  mt ={5} onClick={handlePaymentSubmit} w={60}>
-              Pay Bill
+              Get Reword
             </Button>
           </FormControl>
         )}
@@ -156,8 +150,6 @@ const Bill = () => {
             <br />
             <Select placeholder="Select option">
               <option value="Mobitel">Mobitel</option>
-              <option value="Dialog">Dialog</option>
-              <option value="Airtel">Airtel</option>
             </Select>
             <br />
 
