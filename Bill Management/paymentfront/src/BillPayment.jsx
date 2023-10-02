@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   ChakraProvider,
   Card,
@@ -39,7 +39,7 @@ const BillPayment = () => {
           <Heading>Bill Payment Options</Heading>
           <SimpleGrid columns={2} spacing={20} ml={10} mt={10} p={10}>
             <Card>
-            <Link to="/bills">
+            <Link to="/Payment">
               <CardBody>
                 <PhoneIcon boxSize={12} />
               </CardBody>
@@ -49,7 +49,7 @@ const BillPayment = () => {
               </Link>
             </Card>
             <Card>
-            <Link to="/bills">
+            <Link to="/Payment">
               <CardBody>
                 <PhoneIcon boxSize={12} />
               </CardBody>
