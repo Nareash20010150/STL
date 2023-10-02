@@ -8,11 +8,17 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="user" />
+        <module name="API-gateway" />
         <module name="services" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="backend-ms" target="17" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="API-gateway" options="-parameters" />
+    </option>
   </component>
 </project>
