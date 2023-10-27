@@ -11,10 +11,27 @@ import {
 
 } from "@chakra-ui/react";
 import { PhoneIcon} from "@chakra-ui/icons";
+import { useState, useEffect } from 'react';
 
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 const BillPayment = () => {
+
+//get the message from server
+const [userDetails, setuserDetails] = useState('');
+
+useEffect(() => {
+  axios.get('http://localhost:6001/api/user";') // Replace with your server's URL
+    .then(response => {
+      setuserDetails(response.data.message);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}, []);
+
+console.log(userDetails);
 
 
   return (
