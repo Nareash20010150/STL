@@ -11,6 +11,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Payment = () => {
   const [stripePromise, setStripePromise] = useState(null);
@@ -20,7 +21,20 @@ const Payment = () => {
   const amount = amountToSend*100
   console.log(amount)
 
-  const userId = JSON.parse(localStorage.getItem("user")).user_id;
+  const [userDetails, setuserDetails] = useState('');
+
+//getting information from the userServices
+useEffect(() => {
+  axios.get('http://localhost:6001/api/user";')
+    .then(response => {
+      setuserDetails(response.data.message);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}, []);
+
+const userId = userDetails.user_id;
 
   useEffect(() => {
     fetch("/config").then(async (r) => {
