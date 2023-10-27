@@ -43,6 +43,33 @@ app.post("/create-payment-intent", async (req, res) => {
   }
 });
 
+app.post("/payment" , async (req, res) => {
+
+  try {
+    const amount = req.query.amount || 0; // Default to 0 if not provided
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      currency: 'LKR',
+      amount: amount,
+      automatic_payment_methods: { enabled: true },
+    });
+
+    //query
+    const { payment_id, payment_date, payment_amount,user_id} = req.body
+    const result = await query('INSERT INTO payment (payment_id, payment_type, payment_date, payment_amount, payment_status) VALUES ($1, $2, $3, $4) RETURNING *',
+     [payment_id, payment_date, payment_amount, user_id]);
+     res.status(200).json(result.rows[0])
+    res.status(200).json(paymentIntent)
+  }
+  catch (e) {
+    return res.status(400).send({
+      error: {
+        message: e.message,
+      },
+    });
+  }});
+
+
 app.listen(5252, () =>
   console.log(`Node server listening at http://localhost:5252`)
 );

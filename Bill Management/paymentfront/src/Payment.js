@@ -20,6 +20,8 @@ const Payment = () => {
   const amount = amountToSend*100
   console.log(amount)
 
+  const userId = JSON.parse(localStorage.getItem("user")).user_id;
+
   useEffect(() => {
     fetch("/config").then(async (r) => {
       const { publishableKey } = await r.json();
@@ -37,6 +39,19 @@ const Payment = () => {
       setClientSecret(clientSecret);
     });
   }, [amountToSend]);
+
+  useEffect(() => {
+    // Fetch clientSecret using the dynamic amountToSend and user number
+
+    fetch(`/payment?amount=${amount}&userId=${userId}`, {
+      method: "POST",
+      body: JSON.stringify({}),
+    }).then(async (result) => {
+      var { clientSecret } = await result.json();
+      setClientSecret(clientSecret);
+    } );
+
+  },[amountToSend,userId]);
 
   const handleAmountChange = (e) => {
     setAmountToSend(e.target.value); // Update the amount when the user changes it
