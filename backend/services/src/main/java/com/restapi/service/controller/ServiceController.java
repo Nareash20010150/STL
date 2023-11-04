@@ -26,27 +26,27 @@ public class ServiceController {
         return serviceManagementService.viewAllServices();
     }
 
-    @GetMapping("/viewMyServices/{userid}")
-    public List<ServicesDTO> viewMyServices(@PathVariable("userid") Integer userid) {
-        List<NetService> netServiceList = serviceManagementService.viewAllServices();
-        List<CustomerService> customerServiceList = customerServiceService.viewMyServices(userid);
-        List<ServicesDTO> servicesDTOList = new ArrayList<>();
-
-        // Get all NetService IDs from CustomerService for the given user
-        List<Integer> subscribedServiceIds = new ArrayList<>();
-        for (CustomerService customerService : customerServiceList) {
-            subscribedServiceIds.add(customerService.getService().getId());
-        }
-
-        // Iterate through the netServiceList
-        for (NetService netService : netServiceList) {
-            // Set the status based on whether the NetService ID is subscribed or not
-            String status = subscribedServiceIds.contains(netService.getId()) ? "Active" : "Inactive";
-            ServicesDTO servicesDTO = new ServicesDTO(netService.getId(), netService.getName(), netService.getCategeroy(), netService.getCharge(), status, netService.getTechnology().getName());
-            servicesDTOList.add(servicesDTO);
-        }
-        return servicesDTOList;
-    }
+//    @GetMapping("/viewMyServices/{userid}")
+//    public List<ServicesDTO> viewMyServices(@PathVariable("userid") Integer userid) {
+//        List<NetService> netServiceList = serviceManagementService.viewAllServices();
+//        List<CustomerService> customerServiceList = customerServiceService.viewMyServices(userid);
+//        List<ServicesDTO> servicesDTOList = new ArrayList<>();
+//
+//        // Get all NetService IDs from CustomerService for the given user
+//        List<Integer> subscribedServiceIds = new ArrayList<>();
+//        for (CustomerService customerService : customerServiceList) {
+//            subscribedServiceIds.add(customerService.getService().getId());
+//        }
+//
+//        // Iterate through the netServiceList
+//        for (NetService netService : netServiceList) {
+//            // Set the status based on whether the NetService ID is subscribed or not
+//            String status = subscribedServiceIds.contains(netService.getId()) ? customerServiceService.getStatusByNetServiceID(userid,netService.getId()) : "Inactive";
+//            ServicesDTO servicesDTO = new ServicesDTO(netService.getId(), netService.getName(), netService.getCategeroy(), netService.getCharge(), status, netService.getTechnology().getName());
+//            servicesDTOList.add(servicesDTO);
+//        }
+//        return servicesDTOList;
+//    }
 
 
     @PutMapping("/enable/{userid}/{serviceid}")

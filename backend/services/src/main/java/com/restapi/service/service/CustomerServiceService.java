@@ -18,7 +18,7 @@ public class CustomerServiceService {
 
     public void enableService(Integer userid, Integer serviceid) {
         Object status = customerServiceRepository.existsByServiceid(serviceid);
-        if(!status.equals(true)){
+        if(!status.equals("Active")){
             NetService netService = serviceRepository.findById(serviceid).get();
             CustomerService customerService = new CustomerService();
             customerService.setCustomerid(userid);
@@ -42,4 +42,15 @@ public class CustomerServiceService {
     public List<CustomerService> viewMyServices(Integer userid) {
         return customerServiceRepository.findByCustomerid(userid);
     }
+
+
+//    public String getStatusByNetServiceID(Integer userid, Integer netServiceID) {
+//        CustomerService customerServices = customerServiceRepository.findByCustomeridAndServiceid(userid, netServiceID);
+//        if (customerServices== null) {
+//            return "Inactive";
+//        } else {
+//            return customerServices.getStatus();
+//        }
+//    }
+
 }

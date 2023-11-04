@@ -9,6 +9,7 @@ import Form from 'react-bootstrap/Form';
 import { Container, Alert } from 'react-bootstrap';
 import { useEffect } from "react";
 import axios from "axios";
+import userService from "../../services/userService.js";
 
 function Services() {
   const [show, setShow] = useState(false);
@@ -35,10 +36,11 @@ function Services() {
     setShowEditModal(true); // Show the modal
   };
 
-  // const response = sessionStorage.getItem('authenticatedUser');
+  const userToken = userService.getUser();
+  const userId = userToken.id;
 
   useEffect(() => {
-    axios.get(`http://localhost:6002/api/service/viewMyServices/1`).then((res) => {
+    axios.get(`http://localhost:6002/api/service/viewMyServices/${userId}`).then((res) => {
         console.log(res.data);
         setMyservicesData(res.data);
         const numberOfRows = res.data.length;
@@ -49,7 +51,7 @@ function Services() {
   const handleEnableService = () => {
     if (serviceToEnable) {
       axios
-        .put(`http://localhost:6002/api/service/enableMyService/${serviceToEnable}`)
+        .put(`http://localhost:6002/api/service/enable/${userId}/${serviceToEnable}`)
         .then((response) => {
           setServiceToEnable(null);
           // setShowEnableModal(false);
@@ -64,7 +66,7 @@ function Services() {
   const handleDisableService = () => {
     if (serviceToDisable) {
       axios
-        .put(`http://localhost:6002/api/service/disableMyService/${serviceToDisable}`)
+        .put(`http://localhost:6002/api/service/disable/${userId}/${serviceToDisable}`)
         .then((response) => {
           setServiceToDisable(null);
           // setShowDisableModal(false);
@@ -133,7 +135,7 @@ function Services() {
                           <Button
                             variant="danger"
                             onClick={() => {
-                              setServiceToDisable(service.serviceProviderServicesId);
+                              setServiceToDisable(service.id);
                               setShowDisableModal(true);
                             }}
                           >disable</Button>
@@ -143,7 +145,7 @@ function Services() {
                           <Button     
                             variant="success"                       
                             onClick={() => {
-                              setServiceToEnable(service.serviceProviderServicesId);
+                              setServiceToEnable(service.id);
                               setShowEnableModal(true);
                             }}
                           >enable</Button>

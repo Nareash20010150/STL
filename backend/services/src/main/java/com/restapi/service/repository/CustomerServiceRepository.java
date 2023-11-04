@@ -21,4 +21,7 @@ public interface CustomerServiceRepository extends JpaRepository<CustomerService
     CustomerService findByCustomeridAndServiceid(@Param("customerid") Integer customerid,@Param("serviceid") Integer serviceid);
 
     List<CustomerService> findByCustomerid(Integer userid);
+
+//    @Query("SELECT c.status FROM CustomerService c WHERE c.service.id = :serviceid and c.customerid = :userid")
+//    String getStatusByNetServiceID(@Param("userid") Integer userid, @Param("service_id") Integer serviceid);
 }
