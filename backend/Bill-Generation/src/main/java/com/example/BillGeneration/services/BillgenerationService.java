@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class BillgenerationService {
     @Autowired
-    private NotificationService notificationService;
+    private EmailSenderService emailSenderService;
     private final RestTemplate restTemplate;
     private UserDetails userDetails;
 
@@ -38,6 +38,8 @@ public class BillgenerationService {
         // Get the current month as an enum value (e.g., Month.JANUARY, Month.FEBRUARY, etc.)
         Month currentMonth = currentYearMonth.getMonth();
         String month = currentMonth.getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+
+//        get all users from user service
         String url = "http://localhost:6001/api/user/support/all";
         ResponseEntity<List<UserDetails>> response = restTemplate.exchange(
                 url,
@@ -47,6 +49,7 @@ public class BillgenerationService {
         );
         List<UserDetails> allUsers = response.getBody();
 
+//        for each user find the enabled services
        allUsers.forEach(user -> {
            StringBuilder allServiceDetails = new StringBuilder();
            AtomicInteger totalAmount = new AtomicInteger(0);
@@ -72,7 +75,11 @@ public class BillgenerationService {
                         "Thank you for using our services.\n";
 
 //           send email notification
-           notificationService.sendEmailNotification(user.getEmail(),message);
+           emailSenderService.sendEmail(user.getEmail(),message,"Bill for the month of "+month);
+
+           String viewbillUrl = "http://localhost:8080/api/viewbill";
+           String viewCustomerbillUrl = viewbillUrl + "?userId=" + user.getId() + "&message=" + message;
+           ResponseEntity<String> notificationResponse = restTemplate.postForEntity(viewCustomerbillUrl, null, String.class);
        });
 
     }
