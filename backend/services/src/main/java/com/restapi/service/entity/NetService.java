@@ -18,7 +18,10 @@ public class NetService {
     private Integer id;
 
     private String name;
+
     private String categeroy;
+
+    private Long charge;
 
     @ManyToOne
     @JoinColumn(name = "technology_id", referencedColumnName = "id")

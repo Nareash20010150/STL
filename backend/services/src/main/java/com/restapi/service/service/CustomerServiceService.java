@@ -7,6 +7,8 @@ import com.restapi.service.repository.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerServiceService {
     @Autowired
@@ -16,24 +18,39 @@ public class CustomerServiceService {
 
     public void enableService(Integer userid, Integer serviceid) {
         Object status = customerServiceRepository.existsByServiceid(serviceid);
-        if(!status.equals(true)){
+        if(!status.equals("Active")){
             NetService netService = serviceRepository.findById(serviceid).get();
             CustomerService customerService = new CustomerService();
             customerService.setCustomerid(userid);
-            customerService.setStatus("enable");
+            customerService.setStatus("Active");
             customerService.setService(netService);
 
             customerServiceRepository.save(customerService);
         }else{
             CustomerService customerService = customerServiceRepository.findByCustomeridAndServiceid(userid,serviceid);
-            customerService.setStatus("enable");
+            customerService.setStatus("Active");
             customerServiceRepository.save(customerService);
         }
     }
 
     public void disableService(Integer userid, Integer serviceid) {
         CustomerService customerService = customerServiceRepository.findByCustomeridAndServiceid(userid,serviceid);
-        customerService.setStatus("disable");
+        customerService.setStatus("Inactive");
         customerServiceRepository.save(customerService);
     }
+
+    public List<CustomerService> viewMyServices(Integer userid) {
+        return customerServiceRepository.findByCustomerid(userid);
+    }
+
+
+//    public String getStatusByNetServiceID(Integer userid, Integer netServiceID) {
+//        CustomerService customerServices = customerServiceRepository.findByCustomeridAndServiceid(userid, netServiceID);
+//        if (customerServices== null) {
+//            return "Inactive";
+//        } else {
+//            return customerServices.getStatus();
+//        }
+//    }
+
 }

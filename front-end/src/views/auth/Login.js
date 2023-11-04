@@ -84,8 +84,6 @@ function Login() {
                 (res) => {
                     if (res.type === "OK") {
                         toast.success(res.message);
-                        sessionStorage.setItem("token", res.token);
-                        sessionStorage.setItem("id", res.id);
                         navigate("/");
                         
                     } else if (res.type === "BAD") {
