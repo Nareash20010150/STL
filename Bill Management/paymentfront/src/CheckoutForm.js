@@ -51,8 +51,8 @@ export default function CheckoutForm(props) {
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" />
-      <button style = {{backgroundColor :"#4794eb"  , padding:"15px", minWidth: "20%" ,
-      borderRadius :"5px" ,marginTop:"5%" , marginLeft:"80%" , color:"whitesmoke"}} disabled={isProcessing || !stripe || !elements} id="submit" >
+      <button style = {{backgroundColor :"#92E3A9"  , padding:"15px", minWidth: "20%" ,
+      borderRadius :"5px" ,marginTop:"5%" , marginLeft:"80%" , color:"black"}} disabled={isProcessing || !stripe || !elements} id="submit" >
         <span id="button-text">
           {isProcessing ? "Processing ... " : "Pay now"}
         </span>

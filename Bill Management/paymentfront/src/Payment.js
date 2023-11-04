@@ -35,6 +35,8 @@ useEffect(() => {
 }, []);
 
 const userId = userDetails.user_id;
+//store userid in local storage
+localStorage.setItem('userId', userId);
 
   useEffect(() => {
     fetch("/config").then(async (r) => {
@@ -86,7 +88,7 @@ const userId = userDetails.user_id;
       borderRadius="10px" // Add rounded corners
     >
       <ChakraProvider>
-        <Heading>Pay your Bills here</Heading>
+        <Heading>Pay your SRI-CARE Bills here</Heading><br/>
         <div>
           <FormLabel>Add your Number /Account: </FormLabel>
           <Input
@@ -109,8 +111,8 @@ const userId = userDetails.user_id;
           <CheckoutForm />
         </Elements>
       )}
-     <Link to = "/billPayment"><Button style = {{backgroundColor :"#4794eb"  , padding:"15px", minWidth: "20%" ,
-      borderRadius :"5px" ,marginTop:"-12%" , marginLeft:"-80%" , color:"whitesmoke"}}>Back</Button></Link> 
+     <Link to = "/"><Button style = {{backgroundColor :"#92E3A9"  , padding:"15px", minWidth: "20%" ,
+      borderRadius :"5px" ,marginTop:"-12%" , marginLeft:"-80%" , color:"black"}}>Back</Button></Link> 
     </Box>
   );
 };

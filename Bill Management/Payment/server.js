@@ -70,6 +70,52 @@ app.post("/payment" , async (req, res) => {
   }});
 
 
+  app.get("/paymentHistory", async (req, res) => {
+    const customer_id = req.query.customer_id;
+
+    try {
+      const viewDropQuery  =  "SELECT * FROM payment WHERE customer_id = $1";
+      const queryResult  = await query(viewDropQuery, [customer_id])
+      return queryResult.rows
+    } catch (e) {
+      
+      return res.status(400).send({
+        error: {
+          message: e.message,
+        },
+      });
+    }
+  });
+
+
+  //get  customer bills from  springboot in billing service
+app.post('/api/receiveData', (req, res) => {
+
+    const receivedData = req.body;
+
+
+    res.status(200).send('Data received and processed');
+});
+
+//get unpaid bills
+app.get("/paymentBills", async (req, res) => {
+  const customer_id = req.query.customer_id;
+
+  try {
+    const viewDropQuery  =  "SELECT * FROM bills WHERE customer_id = $1";
+    const queryResult  = await query(viewDropQuery, [customer_id])
+    return queryResult.rows
+  } catch (e) {
+    
+    return res.status(400).send({
+      error: {
+        message: e.message,
+      },
+    });
+  }
+});
+
+
 app.listen(5252, () =>
   console.log(`Node server listening at http://localhost:5252`)
 );
