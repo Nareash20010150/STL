@@ -54,6 +54,7 @@ function Services() {
         .put(`http://localhost:6002/api/service/enable/${userId}/${serviceToEnable}`)
         .then((response) => {
           setServiceToEnable(null);
+          window.location.reload();
           // setShowEnableModal(false);
         })
         .catch((error) => {
@@ -69,6 +70,7 @@ function Services() {
         .put(`http://localhost:6002/api/service/disable/${userId}/${serviceToDisable}`)
         .then((response) => {
           setServiceToDisable(null);
+          window.location.reload();
           // setShowDisableModal(false);
         })
         .catch((error) => {
