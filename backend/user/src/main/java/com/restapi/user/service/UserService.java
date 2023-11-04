@@ -6,7 +6,6 @@ import com.restapi.user.payload.request.ReqUserRegister;
 import com.restapi.user.payload.response.ResMessage;
 import com.restapi.user.payload.response.ResPayload;
 import com.restapi.user.payload.response.ResType;
-import com.restapi.user.payload.response.objects.UserDetails;
 import com.restapi.user.payload.response.objects.UserToken;
 import com.restapi.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +58,9 @@ public class UserService {
         UserToken userToken = new UserToken(user.getId(), user.getUsername());
 
         return ResponseEntity.ok(new ResPayload(userToken, "Login successful", ResType.OK));
+    }
+
+    public ResponseEntity<?> getUsers () {
+        return ResponseEntity.ok(userRepository.findAll());
     }
 }
