@@ -7,9 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Bill-Generation" />
+        <module name="services" />
         <module name="user" />
         <module name="API-gateway" />
-        <module name="services" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -19,6 +20,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="API-gateway" options="-parameters" />
+      <module name="Bill-Generation" options="-parameters" />
     </option>
   </component>
 </project>
