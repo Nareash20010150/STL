@@ -1,6 +1,8 @@
 server:
-  port:
-    6001
+  port: 6001
+  servlet:
+    session:
+      persistent: false
 
 spring:
   application:
@@ -19,3 +21,4 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
     show-sql: true
+    open-in-view: false

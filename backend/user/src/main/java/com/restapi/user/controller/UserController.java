@@ -2,6 +2,7 @@ package com.restapi.user.controller;
 
 import com.restapi.user.payload.request.ReqUserLogin;
 import com.restapi.user.payload.request.ReqUserRegister;
+import com.restapi.user.payload.response.ResMessage;
 import com.restapi.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,14 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody ReqUserRegister reqUserRegister) {
-        return userService.register(reqUserRegister);
+    public ResponseEntity<ResMessage> register( @RequestBody ReqUserRegister reqUserRegister) {
+        System.out.println ("Registering user: " + reqUserRegister.getUsername() );
+        return (ResponseEntity<ResMessage>) userService.register(reqUserRegister);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getUsers(){
+        return userService.getUsers();
     }
 
     @PostMapping("/login")

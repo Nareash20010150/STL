@@ -35,6 +35,8 @@ function Services() {
     setShowEditModal(true); // Show the modal
   };
 
+  // const response = sessionStorage.getItem('authenticatedUser');
+
   useEffect(() => {
     axios.get(`http://localhost:6002/api/service/viewMyServices/1`).then((res) => {
         console.log(res.data);
