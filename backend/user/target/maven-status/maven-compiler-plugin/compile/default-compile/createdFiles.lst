@@ -1,0 +1,14 @@
+com\restapi\user\payload\response\ResMessage.class
+com\restapi\user\repository\UserRepository.class
+com\restapi\user\UserApplication.class
+com\restapi\user\payload\response\objects\UserToken.class
+com\restapi\user\service\UserService.class
+com\restapi\user\payload\request\ReqUserLogin.class
+com\restapi\user\payload\response\objects\UserDetails.class
+com\restapi\user\controller\SupportController.class
+com\restapi\user\service\SupportService.class
+com\restapi\user\model\User.class
+com\restapi\user\payload\response\ResPayload.class
+com\restapi\user\payload\response\ResType.class
+com\restapi\user\payload\request\ReqUserRegister.class
+com\restapi\user\controller\UserController.class
