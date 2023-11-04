@@ -84,14 +84,10 @@ function Login() {
                 (res) => {
                     if (res.type === "OK") {
                         toast.success(res.message);
-
-                        if (res.payload.userType === "buyer") {
-                            navigate("/buyer");
-                        } else if (res.payload.userType === "seller") {
-                            navigate("/seller");
-                        } else {
-                            navigate("/");
-                        }
+                        sessionStorage.setItem("token", res.token);
+                        sessionStorage.setItem("id", res.id);
+                        navigate("/");
+                        
                     } else if (res.type === "BAD") {
                         toast.error(res.message);
                     }
