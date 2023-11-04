@@ -1,11 +1,12 @@
 server:
-  port:
-    6001
+  port: 6001
+  servlet:
+    session:
+      persistent: false
 
 spring:
   application:
-    name:
-      user
+    name: user
   datasource:
     url: jdbc:mysql://localhost:3306/user_db
     username: root
@@ -14,8 +15,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+    show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
-    show-sql: true
+    open-in-view: false

@@ -20,7 +20,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="API-gateway" options="-parameters" />
-      <module name="Bill-Generation" options="-parameters" />
+      <module name="Bill-Generation" options="" />
     </option>
   </component>
 </project>
