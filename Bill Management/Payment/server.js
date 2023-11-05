@@ -96,7 +96,7 @@ app.post("/payment" , async (req, res) => {
 app.post('/api/viewbills', async (req, res) => {
   const { userId, message, amount } = req.query;
 // console.log( userId, message, amount);
-  const result = await query('INSERT INTO payment (message, amount, date, customer_id) VALUES ($1, $2, $3, $4) RETURNING *',
+  const result = await query('INSERT INTO bills (message, amount, date, customer_id) VALUES ($1, $2, $3, $4) RETURNING *',
       [message, amount, new Date(), userId]);
   res.status(200).json(result.rows[0]);
 });
