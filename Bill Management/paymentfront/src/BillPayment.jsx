@@ -31,7 +31,7 @@ const BillPayment = () => {
   //getting information from the userServices
   useEffect(() => {
     axios
-      .get('http://localhost:6001/api/user";')
+      .get('http://localhost:8080/api/user";')
       .then((response) => {
         setuserDetails(response.data.message);
       })
