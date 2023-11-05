@@ -29,16 +29,15 @@ const BillPayment = () => {
   const [userDetails, setuserDetails] = useState("");
 
   //getting information from the userServices
-  useEffect(() => {
-    axios
-      .get('http://localhost:8080/api/user";')
-      .then((response) => {
-        setuserDetails(response.data.message);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }, []);
+useEffect(() => {
+  axios.get('http://localhost:8080/api/user/all')
+    .then(response => {
+      setuserDetails(response.data.message);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}, []);
 
   return (
     <ChakraProvider>
