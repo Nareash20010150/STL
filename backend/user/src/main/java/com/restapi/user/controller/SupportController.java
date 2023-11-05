@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/user/support")
+@RequestMapping("/api/user")
 public class SupportController {
     @Autowired
     private SupportService supportService;
 
     // Support for Microservice Communication
-    @GetMapping("")
+    @GetMapping("/support")
     public UserDetails getUserDetailsById(@RequestParam(name = "userId") Integer userId) {
         return supportService.getUserDetailsById(userId);
     }

@@ -1,6 +1,6 @@
 server:
   port:
-    0
+    8004
 
 spring:
   application:
@@ -21,6 +21,6 @@ spring:
     show-sql: true
 
 eureka:
-    client:
-        service-url:
-            defaultZone: http://localhost:8761/eureka/
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

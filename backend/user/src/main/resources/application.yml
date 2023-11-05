@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 8003
   servlet:
     session:
       persistent: false
@@ -14,7 +14,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
@@ -23,6 +23,6 @@ spring:
     open-in-view: false
 
 eureka:
-    client:
-        service-url:
-            defaultZone: http://localhost:8761/eureka/
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

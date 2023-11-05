@@ -14,14 +14,14 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/service")
 public class SupportController {
     @Autowired
     private ServiceManagementService serviceManagementService;
     @Autowired
     private CustomerServiceService customerServiceService;
 
-    @GetMapping("/service/customer/{userid}")
+    @GetMapping("/customer/{userid}")
     public List<CustomerServiceDTO> viewMyServices(@PathVariable("userid") Integer userid) {
         List<NetService> netServiceList = serviceManagementService.viewAllServices();
         List<CustomerService> customerServiceList = customerServiceService.viewMyServices(userid);

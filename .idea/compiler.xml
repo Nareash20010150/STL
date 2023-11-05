@@ -11,16 +11,19 @@
         <module name="services" />
         <module name="user" />
         <module name="API-gateway" />
+        <module name="ServiceDiscovery" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="backend-ms" target="17" />
+      <module name="Service-Discovery" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="API-gateway" options="-parameters" />
       <module name="Bill-Generation" options="-parameters" />
+      <module name="ServiceDiscovery" options="-parameters" />
     </option>
   </component>
 </project>
