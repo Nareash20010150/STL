@@ -23,19 +23,15 @@ const Payment = () => {
 
   const [userDetails, setuserDetails] = useState('');
 
-//getting information from the userServices
-useEffect(() => {
-  axios.get('http://localhost:6001/api/user";')
-    .then(response => {
-      setuserDetails(response.data.message);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-}, []);
+var userString = localStorage.getItem("user");
 
-const userId = userDetails.user_id;
-//store userid in local storage
+if (userString) {
+    var userObject = JSON.parse(userString);
+    var userId = userObject.userId;
+    console.log("User ID:", userId);
+} else {
+    console.log("User data not found in localStorage");
+
 localStorage.setItem('userId', userId);
 
   useEffect(() => {
