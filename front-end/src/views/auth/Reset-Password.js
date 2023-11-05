@@ -125,7 +125,7 @@ function ResetPassword() {
                             <CCardBody className="p-4">
                                 <h1 className="text-center">Reset Password</h1>
                                 <p className="text-medium-emphasis text-center">
-                                    Please enter your email address
+                                    Please enter your new password
                                 </p>
 
                                 <CForm className="row g-3">
