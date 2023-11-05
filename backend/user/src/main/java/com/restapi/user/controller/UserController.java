@@ -4,6 +4,9 @@ import com.restapi.user.payload.request.ReqUserLogin;
 import com.restapi.user.payload.request.ReqUserRegister;
 import com.restapi.user.payload.response.ResMessage;
 import com.restapi.user.service.UserService;
+
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,5 +37,16 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody ReqUserLogin reqUserLogin) {
         return userService.login(reqUserLogin);
+    }
+
+    @PostMapping("/forget-password")
+    public ResponseEntity<?> forgetPassword(@RequestParam String email) throws MessagingException {
+        return userService.forgetPassword(email);
+    }
+
+    @PutMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestParam String token, @RequestParam String newPassword) {
+        System.out.println("new password" + newPassword);
+        return userService.resetPassword(token, newPassword);
     }
 }
