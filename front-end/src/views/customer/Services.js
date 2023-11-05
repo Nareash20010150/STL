@@ -9,6 +9,7 @@ import Form from 'react-bootstrap/Form';
 import { Container, Alert } from 'react-bootstrap';
 import { useEffect } from "react";
 import axios from "axios";
+import userService from "../../services/userService.js";
 
 function Services() {
   const [show, setShow] = useState(false);
@@ -35,46 +36,25 @@ function Services() {
     setShowEditModal(true); // Show the modal
   };
 
-  // GETTING LOGGED IN SERVICEPROVIDER ID
+  const userToken = userService.getUser();
+  const userId = userToken.id;
 
-  // const response = sessionStorage.getItem('authenticatedUser');
-  // const userData = JSON.parse(response);
-
-  // useEffect(() => {
-  //   const serverLink = 'http://localhost:8080';
-
-  //   const fetchUserData = async () => {
-  //       try {
-  //           const response = await axios.get(serverLink + '/auth/getUserById/' + userData.userid);
-  //           if (response.data) {
-  //               // setUserDetail(response.data);
-  //               console.log(userData.userid)
-  //           }
-  //       } catch (error) {
-  //           console.error('Error fetching user data:', error);
-  //       }
-  //   };
-
-  //   fetchUserData();
-  // }, [userData.userid]);
-
-
-  // useEffect(() => {
-  //   axios.get(`http://localhost:8080/auth/viewMyServices/${userData.userid}`).then((res) => {
-  //       console.log(res.data);
-  //       setMyservicesData(res.data);
-  //       const numberOfRows = res.data.length;
-  //       setMyServicesCount(numberOfRows);
-  //   });
-
-  // }, []);
+  useEffect(() => {
+    axios.get(`http://localhost:6002/api/service/viewMyServices/${userId}`).then((res) => {
+        console.log(res.data);
+        setMyservicesData(res.data);
+        const numberOfRows = res.data.length;
+        setMyServicesCount(numberOfRows);
+    });
+  }, []);
 
   const handleEnableService = () => {
     if (serviceToEnable) {
       axios
-        .put(`http://localhost:8080/auth/enableMyService/${serviceToEnable}`)
+        .put(`http://localhost:6002/api/service/enable/${userId}/${serviceToEnable}`)
         .then((response) => {
           setServiceToEnable(null);
+          window.location.reload();
           // setShowEnableModal(false);
         })
         .catch((error) => {
@@ -87,9 +67,10 @@ function Services() {
   const handleDisableService = () => {
     if (serviceToDisable) {
       axios
-        .put(`http://localhost:8080/auth/disableMyService/${serviceToDisable}`)
+        .put(`http://localhost:6002/api/service/disable/${userId}/${serviceToDisable}`)
         .then((response) => {
           setServiceToDisable(null);
+          window.location.reload();
           // setShowDisableModal(false);
         })
         .catch((error) => {
@@ -135,7 +116,9 @@ function Services() {
               <tr>
                 <th>Service Name</th>
                 <th>Service Category</th>
+                <th>Technology</th>
                 <th>Status</th>
+                <th>Charge (Rs)</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -143,29 +126,31 @@ function Services() {
               {/* Map through the displayed training sessions and render each row */}
               {myservicesData.map((service) => (
                 <tr key={service.id}>
-                  <td className="text-center">{service.serviceName}</td>
-                  <td className="text-center">{service.serviceCategoryName}</td>
+                  <td className="text-center">{service.name}</td>
+                  <td className="text-center">{service.categeroy}</td>
+                  <td className="text-center">{service.technology}</td>
                   <td className="text-center">{service.status}</td>
+                  <td className="text-center">{service.charge}</td>
                   <td className="text-center">
-                    {service.status === "active" ? (
+                    {service.status === "Active" ? (
                       <>
-                          <i
-                            className="fas fa-times-circle fs-2 me-2"
+                          <Button
+                            variant="danger"
                             onClick={() => {
-                              setServiceToDisable(service.serviceProviderServicesId);
+                              setServiceToDisable(service.id);
                               setShowDisableModal(true);
                             }}
-                          ></i>
+                          >disable</Button>
                       </>
                       ) : (
                       <>
-                          <i
-                            className="fas fa-check-circle fs-2 me-2"
+                          <Button     
+                            variant="success"                       
                             onClick={() => {
-                              setServiceToEnable(service.serviceProviderServicesId);
+                              setServiceToEnable(service.id);
                               setShowEnableModal(true);
                             }}
-                          ></i>
+                          >enable</Button>
                       </>
                     )}
                   </td>
