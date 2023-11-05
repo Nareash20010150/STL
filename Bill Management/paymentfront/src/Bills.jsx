@@ -72,9 +72,6 @@ const Bills = () => {
                         Bill ID
                       </Th>
                       <Th p={10} fontSize={20}>
-                        Bill Type
-                      </Th>
-                      <Th p={10} fontSize={20}>
                         Description
                       </Th>
                       <Th p={10} fontSize={20}>
@@ -86,15 +83,14 @@ const Bills = () => {
                     </Tr>
                   </Thead>
                   <Tbody fontSize={20} fontWeight={"bold"}>
-                    {/* {paymentHistory.map((paymentHistory) => (
+                    {paymentBills.map((paymentBills) => (
                         <Tr>
-                            <Td borderWidth="1px">{paymentHistory.payment_id} </Td>
-                            <Td borderWidth="1px">{paymentHistory.description}</Td>
-                            <Td borderWidth="1px">{paymentHistory.payment_amount}</Td>
-                            <Td borderWidth="1px">{paymentHistory.payment_amount}</Td>
-                            <Td borderWidth="1px">{paymentHistory.payment_date}</Td>
+                            <Td borderWidth="1px">{paymentBills.bill_id} </Td>
+                            <Td borderWidth="1px">{paymentBills.message}</Td>
+                            <Td borderWidth="1px">{paymentBills.amount}</Td>
+                            <Td borderWidth="1px">{paymentBills.date}</Td>
                         </Tr>
-                        ))} */}
+                        ))}
                   </Tbody>
                 </Table>
               </TableContainer>

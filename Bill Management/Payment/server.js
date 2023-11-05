@@ -56,7 +56,7 @@ app.post("/payment" , async (req, res) => {
 
     //query
     const { payment_id, payment_date, payment_amount,user_id} = req.body
-    const result = await query('INSERT INTO payment (payment_id, payment_type, payment_date, payment_amount, payment_status) VALUES ($1, $2, $3, $4) RETURNING *',
+    const result = await query('INSERT INTO payment (payment_id, payment_type, payment_date, payment_amount, payment_status) VALUES ($1, $2, $3, $4,$5) RETURNING *',
      [payment_id, payment_date, payment_amount, user_id]);
      res.status(200).json(result.rows[0])
     res.status(200).json(paymentIntent)
@@ -89,9 +89,14 @@ app.post("/payment" , async (req, res) => {
 
 
   //get  customer bills from  springboot in billing service
-app.post('/api/receiveData', (req, res) => {
+app.post('/api/viewbills', async (req, res) => {
 
-    const receivedData = req.body;
+    const {userId , message, amount} = req.body;
+    
+
+    const result = await query('INSERT INTO payment (message ,amount ,date, customer_id) VALUES ($1, $2, $3, $4) RETURNING *',
+    [userId , message, amount]);
+    res.status(200).json(result.rows[0])
 
 
     res.status(200).send('Data received and processed');
