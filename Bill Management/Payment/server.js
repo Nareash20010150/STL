@@ -94,16 +94,11 @@ app.post("/payment" , async (req, res) => {
 
   //get  customer bills from  springboot in billing service
 app.post('/api/viewbills', async (req, res) => {
-
-    const {userId , message, amount} = req.body;
-    
-
-    const result = await query('INSERT INTO payment (message ,amount ,date, customer_id) VALUES ($1, $2, $3, $4) RETURNING *',
-    [userId , message, amount]);
-    res.status(200).json(result.rows[0])
-
-
-    res.status(200).send('Data received and processed');
+  const { userId, message, amount } = req.query;
+// console.log( userId, message, amount);
+  const result = await query('INSERT INTO payment (message, amount, date, customer_id) VALUES ($1, $2, $3, $4) RETURNING *',
+      [message, amount, new Date(), userId]);
+  res.status(200).json(result.rows[0]);
 });
 
 //get unpaid bills

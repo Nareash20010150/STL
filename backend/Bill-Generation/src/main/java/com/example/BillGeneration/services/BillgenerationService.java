@@ -35,6 +35,7 @@ public class BillgenerationService {
     }
 
     @Scheduled(cron = "0 0 0 1 * ?")
+//@PostConstruct
     public void generateBill() {
         YearMonth currentYearMonth = YearMonth.now();
         // Get the current month as an enum value (e.g., Month.JANUARY, Month.FEBRUARY, etc.)
@@ -81,15 +82,17 @@ public class BillgenerationService {
                    "Dear "+user.getFirstName()+" "+user.getLastName()+",\n" +
                      "Your detailed bill for the month of "+month+" along with the charges is listed below: \n" +
                          allServiceDetails+"\n"+ "Total Amount: "+totalAmount+"\n"+
-                        "Thank you for using our services.\n";
+                        "Thank you for using our services\n";
 
            System.out.println("message to be Sent"+message);
 //           send email notification
            emailSenderService.sendEmail(user.getEmail(),message,"Bill for the month of "+month);
-//
-//           String viewbillUrl = "http://localhost:5252/api/viewbills";
-//           String viewCustomerbillUrl = viewbillUrl + "?userId=" + user.getId() + "&message=" + message+ "&amount=" + totalAmount;
-//           ResponseEntity<String> notificationResponse = restTemplate.postForEntity(viewCustomerbillUrl, null, String.class);
+
+           String viewbillUrl = "http://localhost:5252/api/viewbills";
+           String viewCustomerbillUrl = viewbillUrl + "?userId=" + user.getId() + "&message=" + message+ "&amount=" + totalAmount;
+
+           System.out.println("viewCustomerbillUrl"+viewCustomerbillUrl);
+           ResponseEntity<String> notificationResponse = restTemplate.postForEntity(viewCustomerbillUrl, null, String.class);
        });
 
     }
