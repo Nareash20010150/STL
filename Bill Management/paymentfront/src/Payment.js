@@ -24,7 +24,7 @@ const Payment = () => {
   const [userDetails, setuserDetails] = useState('');
 
 useEffect(() => {
-  axios.get('http://localhost:6001/api/user/all')
+  axios.get('http://localhost:8080/api/user/all')
     .then(response => {
       setuserDetails(response.data.message);
     })
