@@ -1,5 +1,5 @@
 server:
-  port: 6001
+  port: 0
   servlet:
     session:
       persistent: false
@@ -21,3 +21,11 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
     open-in-view: false
+
+eureka:
+    client:
+        service-url:
+        defaultZone: http://localhost:8761/eureka
+        fetch-registry: true
+        register-with-eureka: true
+        enabled: false

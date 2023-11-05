@@ -20,10 +20,10 @@ spring:
         format_sql: true
     show-sql: true
 
-#eureka:
-#  client:
-#    service-url:
-#      defaultZone: http://eureka-server:8761/eureka
-#    fetch-registry: true
-#    register-with-eureka: true
-#    enabled: false
+eureka:
+  client:
+    service-url:
+    defaultZone: http://eureka-server:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: false
