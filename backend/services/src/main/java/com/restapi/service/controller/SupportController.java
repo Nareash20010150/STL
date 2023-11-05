@@ -28,7 +28,7 @@ public class SupportController {
         List<CustomerServiceDTO> customerServicesDTOList = new ArrayList<>();
 
         for (CustomerService customerService : customerServiceList) {
-            CustomerServiceDTO customerServiceDTO = new CustomerServiceDTO(customerService.getId(), customerService.getService());
+            CustomerServiceDTO customerServiceDTO = new CustomerServiceDTO(customerService.getCustomerid(), customerService.getService());
             customerServicesDTOList.add(customerServiceDTO);
         }
 

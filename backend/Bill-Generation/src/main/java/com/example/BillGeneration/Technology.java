@@ -12,12 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class Services {
+public class Technology {
     private Integer id;
     private String name;
-    private String category;
-    private Integer charge;
-    private Technology technology;
-
 }

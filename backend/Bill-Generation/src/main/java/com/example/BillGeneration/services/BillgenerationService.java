@@ -1,6 +1,7 @@
 package com.example.BillGeneration.services;
 
 import com.example.BillGeneration.CustomerService;
+import com.example.BillGeneration.Services;
 import com.example.BillGeneration.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -10,6 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
 import java.time.Month;
 import java.time.YearMonth;
 import java.time.format.TextStyle;
@@ -32,7 +34,7 @@ public class BillgenerationService {
         this.userDetails = userDetails;
     }
 
-    @Scheduled(cron = "0 0 1 * * ?")
+    @Scheduled(cron = "0 0 0 1 * ?")
     public void generateBill() {
         YearMonth currentYearMonth = YearMonth.now();
         // Get the current month as an enum value (e.g., Month.JANUARY, Month.FEBRUARY, etc.)
@@ -40,7 +42,7 @@ public class BillgenerationService {
         String month = currentMonth.getDisplayName(TextStyle.FULL, Locale.ENGLISH);
 
 //        get all users from user service
-        String url = "http://localhost:6001/api/user/support/all";
+        String url = "http://localhost:6001/api/user/all";
         ResponseEntity<List<UserDetails>> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
@@ -56,30 +58,38 @@ public class BillgenerationService {
 
 //           getting details of all the services enabled by the user
            String serviceURL = "http://localhost:6002/api/service/customer/"+user.getId();
-           CustomerService AllCustomerServices = restTemplate.getForObject(serviceURL, CustomerService.class);
+//           CustomerService AllCustomerServices = restTemplate.getForObject(serviceURL, CustomerService.class);
+           ResponseEntity<List<CustomerService>> response2 = restTemplate.exchange(
+                   serviceURL,
+                   HttpMethod.GET,
+                   null,
+                   new ParameterizedTypeReference<List<CustomerService>>() {}
+           );
+           List<CustomerService> AllCustomerServices = response2.getBody();
 
-//           foreach service calculate total and generate bill
-           AllCustomerServices.getServiceName().forEach(service -> {
-               String serviceDetails = "Service Name: " + service.getName() + "\n" +
-                       "Service Charge: " + service.getCharge() + "\n";
-               allServiceDetails.append(serviceDetails);
-               totalAmount.addAndGet(service.getCharge());
+////           foreach service calculate total and generate bill
+           AllCustomerServices.forEach(customer -> {
+                   String serviceDetails = "Service Name: " + customer.getService().getName() + "\n" +
+                           "Service Charge: " + customer.getService().getCharge() + "\n";
+                   allServiceDetails.append(serviceDetails);
+                   totalAmount.addAndGet(customer.getService().getCharge());
 
            });
 
 //           message for email notification
            String message =
                    "Dear "+user.getFirstName()+" "+user.getLastName()+",\n" +
-                     "Your detailed bill for the month of "+month+" along with the charges is listed below \n" +
+                     "Your detailed bill for the month of "+month+" along with the charges is listed below: \n" +
                          allServiceDetails+"\n"+ "Total Amount: "+totalAmount+"\n"+
                         "Thank you for using our services.\n";
 
+           System.out.println("message to be Sent"+message);
 //           send email notification
            emailSenderService.sendEmail(user.getEmail(),message,"Bill for the month of "+month);
-
-           String viewbillUrl = "http://localhost:8080/api/viewbill";
-           String viewCustomerbillUrl = viewbillUrl + "?userId=" + user.getId() + "&message=" + message;
-           ResponseEntity<String> notificationResponse = restTemplate.postForEntity(viewCustomerbillUrl, null, String.class);
+//
+//           String viewbillUrl = "http://localhost:5252/api/viewbills";
+//           String viewCustomerbillUrl = viewbillUrl + "?userId=" + user.getId() + "&message=" + message+ "&amount=" + totalAmount;
+//           ResponseEntity<String> notificationResponse = restTemplate.postForEntity(viewCustomerbillUrl, null, String.class);
        });
 
     }

@@ -16,7 +16,7 @@ import java.util.List;
 
 public class CustomerService {
     private Integer customerid;
-    private List<Services> serviceName;
+    private Services service;
 
 
 }

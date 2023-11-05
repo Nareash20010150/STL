@@ -20,19 +20,20 @@ public class BillGenerationApplication {
 	@Autowired
 	private EmailSenderService emailSenderService;
 
+
 	public static void main(String[] args) {
 		SpringApplication.run(BillGenerationApplication.class, args);
 	}
 
 
-	@EventListener(ApplicationReadyEvent.class)
-	public void sendMail(){
-		emailSenderService.sendEmail(
-				"nareash20010150@gmail.com",
-				"This is a sample email",
-				 "Sample Email"
-		);
-	}
+//	@EventListener(ApplicationReadyEvent.class)
+//	public void sendMail(){
+//		emailSenderService.sendEmail(
+//				"nareash20010150@gmail.com",
+//				"This is a sample email",
+//				 "Sample Email"
+//		);
+//	}
 
 	@Bean
 	public RestTemplate restTemplate(){
