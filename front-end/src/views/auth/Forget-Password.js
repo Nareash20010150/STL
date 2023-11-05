@@ -113,7 +113,7 @@ function ForgetPassword() {
                             <CCardBody className="p-4">
                                 <h1 className="text-center">Forget Password</h1>
                                 <p className="text-medium-emphasis text-center">
-                                    Please enter your new password
+                                    Please enter your email
                                 </p>
 
                                 <CForm className="row g-3">
