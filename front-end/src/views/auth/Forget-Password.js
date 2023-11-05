@@ -111,9 +111,9 @@ function ForgetPassword() {
                     <CCol md={5}>
                         <CCard className="mx-4">
                             <CCardBody className="p-4">
-                                <h1 className="text-center">Sign up</h1>
+                                <h1 className="text-center">Forget Password</h1>
                                 <p className="text-medium-emphasis text-center">
-                                    Please enter your details
+                                    Please enter your new password
                                 </p>
 
                                 <CForm className="row g-3">
