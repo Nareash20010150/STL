@@ -54,7 +54,7 @@ localStorage.setItem('userId', userId);
       var { clientSecret } = await result.json();
       setClientSecret(clientSecret);
     });
-  }, [amountToSend]);
+  }, [amount]);
 
   useEffect(() => {
     // Fetch clientSecret using the dynamic amountToSend and user number
@@ -67,7 +67,7 @@ localStorage.setItem('userId', userId);
       setClientSecret(clientSecret);
     } );
 
-  },[amountToSend,userId]);
+  },[amount,userId]);
 
   const handleAmountChange = (e) => {
     setAmountToSend(e.target.value); // Update the amount when the user changes it

@@ -1,19 +1,22 @@
-const express = require("express");
-const app = express();
-const { resolve } = require("path");
-// Replace if using a different env file or config
-const env = require("dotenv").config({ path: "./.env" });
+import {app} from "./core/init.js";
+import { connectDB,query } from './config/db.js'
+import dotenv from 'dotenv'
+import Stripe from "stripe";
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
+dotenv.config()
+//database connection object
+connectDB()
+
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2022-08-01",
 });
 
-app.use(express.static(process.env.STATIC_DIR));
+// app.use(express.static(process.env.STATIC_DIR));
 
-app.get("/", (req, res) => {
-  const path = resolve(process.env.STATIC_DIR + "/index.html");
-  res.sendFile(path);
-});
+// app.get("/", (req, res) => {
+//   const path = resolve(process.env.STATIC_DIR + "/index.html");
+//   res.sendFile(path);
+// });
 
 app.get("/config", (req, res) => {
   res.send({
@@ -70,12 +73,13 @@ app.post("/payment" , async (req, res) => {
   }});
 
 
-  app.get("/paymentHistory", async (req, res) => {
-    const customer_id = req.query.customer_id;
+  app.get("/api/paymentHistory", async (req, res) => {
+    const customer_id = 1;
 
     try {
       const viewDropQuery  =  "SELECT * FROM payment WHERE customer_id = $1";
       const queryResult  = await query(viewDropQuery, [customer_id])
+      console.log(queryResult.rows)
       return queryResult.rows
     } catch (e) {
       
@@ -103,7 +107,7 @@ app.post('/api/viewbills', async (req, res) => {
 });
 
 //get unpaid bills
-app.get("/paymentBills", async (req, res) => {
+app.get("/api/paymentBills", async (req, res) => {
   const customer_id = req.query.customer_id;
 
   try {

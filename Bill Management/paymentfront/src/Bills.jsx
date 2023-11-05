@@ -30,7 +30,7 @@ const Bills = () => {
     useEffect(() => {
         axios
             .get(
-                `http://localhost:5252/api/Bills?customer_id = ${customer_id}`
+                `http://localhost:5252/api/paymentBills?customer_id = ${customer_id}`
             )
             .then((response) => {
                 setPaymentBills(response.data);
