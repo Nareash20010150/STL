@@ -30,7 +30,7 @@ const PaymentHistory = () => {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:5252/api/paymentHistory?customer_id = ${customer_id}`
+        `http://localhost:8080/api/paymentHistory?customer_id = ${customer_id}`
       )
       .then((response) => {
         setPaymentHistory(response.data);
