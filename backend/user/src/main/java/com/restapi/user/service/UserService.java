@@ -25,8 +25,9 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private UserService userService;
+    @Autowired
     private JavaMailSender javaMailSender;
-
     @Autowired
     private PasswordEncoder encoder;
 
@@ -78,7 +79,6 @@ public class UserService {
     }
 
     public void sendResetPasswordEmail(User user, String resetToken) throws MessagingException {
-        JavaMailSender javaMailSender = this.javaMailSender;
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
         mimeMessageHelper.setTo(user.getEmail());

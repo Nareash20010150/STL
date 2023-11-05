@@ -1,7 +1,5 @@
 package com.restapi.user.config;
 
-import java.util.Properties;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +25,7 @@ public class MailConfig {
         mailSender.setUsername(username);
         mailSender.setPassword(password);
 
-        Properties properties = mailSender.getJavaMailProperties();
+        java.util.Properties properties = mailSender.getJavaMailProperties();
         properties.put("mail.smtp.starttls.enable", "true");
         return mailSender;
     }
