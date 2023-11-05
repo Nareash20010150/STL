@@ -23,8 +23,9 @@ public class User {
     private String address;
     private String email;
     private String password;
+    private String resetToken;
 
-    public User(String username, String firstName, String lastName, String phone, String address, String email, String password) {
+    public User(String username, String firstName, String lastName, String phone, String address, String email, String password, String resetToken) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,5 +33,6 @@ public class User {
         this.address = address;
         this.email = email;
         this.password = password;
+        this.resetToken = resetToken;
     }
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import image from "../../assets/images/signIn.jpg";
+import image from "../../assets/images/signUp.jpg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -12,82 +12,83 @@ import {
     CRow,
     CCard,
     CCardBody,
-    CSpinner,
+    CSpinner
 } from "@coreui/react";
 import { toast } from "react-toastify";
 
-import { v_email, v_required } from "../../utils/validator";
+import {
+    v_required,
+    v_match
+} from "../../utils/validator";
 
 import userService from "../../services/userService";
 
-function Login() {
-    // For the server side requests and responses
+function ResetPassword() {
     const [loading, setLoading] = useState(false);
     let navigate = useNavigate();
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    console.log("TOKEN", token);
 
     // Form data
-    const [loginForm, setLoginForm] = useState({
-        email: "",
+    const [registerForm, setRegisterForm] = useState({
         password: "",
+        confirmPassword: ""
     });
 
     // Update the form data while input
     const onUpdateInput = (e) => {
-        setLoginForm((prev) => ({
+        setRegisterForm((prev) => ({
             ...prev,
             [e.target.name]: e.target.value,
         }));
     };
 
     // For data errors
-    const [loginFormErrors, setLoginFormErrors] = useState({
-        emailError: "",
-        passwordError: "",
+    const [registerFormErrors, setRegisterFormErrors] = useState({
+        password: "",
+        confirmPassword: ""
     });
 
-    // Validate the data and
-    // If valid send to the server
-    // else show the errors
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        let emailError = "";
         let passwordError = "";
+        let confirmPasswordError = "";
 
-        if (!v_required(loginForm.email)) {
-            emailError = "Email can not be empty.";
-        } else if (!v_email(loginForm.email)) {
-            emailError = "Email is not valid.";
-        }
-
-        if (!v_required(loginForm.password)) {
+        if (!v_required(registerForm.password)) {
             passwordError = "Password can not be empty.";
         }
 
+        if (!v_required(registerForm.confirmPassword)) {
+            confirmPasswordError = "Confirm password can not be empty.";
+        } else if (!v_match(registerForm.password, registerForm.confirmPassword)) {
+            confirmPasswordError = "Passwords are not matched.";
+        }
+
         // If errors exist, show errors
-        setLoginFormErrors({
-            emailError,
+        setRegisterFormErrors({
             passwordError,
+            confirmPasswordError
         });
 
         // If no errors exist, send to the server
-        if (!(emailError || passwordError)) {
+        if (
+            !(passwordError ||
+                confirmPasswordError)
+        ) {
             // Sending to the server
             setLoading(true);
 
             const payload = {
-                email: loginForm.email,
-                password: loginForm.password,
+                password: registerForm.password
             };
 
-            userService.login(payload).then(
+            userService.resetPassword(payload, token).then(
                 (res) => {
                     if (res.type === "OK") {
                         toast.success(res.message);
-                        sessionStorage.setItem("token", res.token);
-                        sessionStorage.setItem("id", res.id);
-                        navigate("/");
-                        
+                        navigate("/login");
                     } else if (res.type === "BAD") {
                         toast.error(res.message);
                     }
@@ -111,9 +112,9 @@ function Login() {
     };
 
     return (
-        <div className="bg-light d-flex flex-row align-items-center ">
-            <CContainer>
-                <CRow className="justify-content-center pt-5 mt-5">
+        <div className=" bg-light d-flex flex-row align-items-center h-100">
+            <CContainer className="d-flex">
+                <CRow className="justify-content-center">
                     <CCol md={7}>
                         <div className="text-center">
                             <img alt="Responsive image" src={image} />
@@ -122,48 +123,39 @@ function Login() {
                     <CCol md={5}>
                         <CCard className="mx-4">
                             <CCardBody className="p-4">
-                                <h1 className="text-center">Login</h1>
+                                <h1 className="text-center">Sign up</h1>
                                 <p className="text-medium-emphasis text-center">
-                                    Please enter your credentials
+                                    Please enter your details
                                 </p>
+
                                 <CForm className="row g-3">
-                                    <CCol md={12}>
-                                        <CFormInput
-                                            type="text"
-                                            id="validationServer01"
-                                            name="email"
-                                            label="Email"
-                                            onChange={onUpdateInput}
-                                            value={loginForm.email}
-                                            feedback={loginFormErrors.emailError}
-                                            invalid={loginFormErrors.emailError ? true : false}
-                                        />
-                                    </CCol>
-                                    <CCol md={12}>
+                                <CCol md={6}>
                                         <CFormInput
                                             type="password"
                                             id="validationServer01"
                                             name="password"
                                             label="Password"
                                             onChange={onUpdateInput}
-                                            value={loginForm.password}
-                                            feedback={loginFormErrors.passwordError}
-                                            invalid={loginFormErrors.passwordError ? true : false}
+                                            value={registerForm.password}
+                                            feedback={registerFormErrors.passwordError}
+                                            invalid={registerFormErrors.passwordError ? true : false}
                                         />
                                     </CCol>
-                                    <CCol md={12}>
-                                        <div className="forgot-dev">
-                                            <a class="forgot" href="/forget-password">
-                                                <p className="text-center">
-                                                    forgot password ?
-                                                </p>
-                                            </a>
-                                        </div>
+                                    <CCol md={6}>
+                                        <CFormInput
+                                            type="password"
+                                            id="validationServer01"
+                                            name="confirmPassword"
+                                            label="Confirm Password"
+                                            onChange={onUpdateInput}
+                                            value={registerForm.confirmPassword}
+                                            feedback={registerFormErrors.confirmPasswordError}
+                                            invalid={
+                                                registerFormErrors.confirmPasswordError ? true : false
+                                            }
+                                        />
                                     </CCol>
-                                    <CCol md={12}>
-                                        <hr />{" "}
-                                        <p className="text-medium-emphasis text-center">or</p>
-                                    </CCol>
+
                                     <div className="d-grid">
                                         <CButton
                                             color="primary"
@@ -172,7 +164,7 @@ function Login() {
                                             onClick={handleSubmit}
                                         >
                                             <div className="text-white">
-                                                Login {loading && <CSpinner size="sm" />}
+                                                Submit {loading && <CSpinner size="sm" />}
                                             </div>
                                         </CButton>
                                     </div>
@@ -186,4 +178,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default ResetPassword;

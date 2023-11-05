@@ -25,6 +25,22 @@ class userService {
         });
     }
 
+    forgetPassword(payload) {
+        console.log("PAYLOAD", payload.email);
+        return axios.post(API_URL + "/forget-password?email=" + payload.email).then((response) => {
+            console.log("RESPONSE", response.data);
+            return response.data;
+        })
+    }
+
+    resetPassword(payload, token) {
+        console.log("PAYLOAD", payload);
+        return axios.put(API_URL + "/reset-password?token=" + token + "&newPassword=" + payload.password).then((response) => {
+            console.log("RESPONSE", response.data);
+            return response.data;
+        })
+    }
+
     logout() {
         localStorage.removeItem("user");
     }

@@ -8,15 +8,24 @@ import com.restapi.user.payload.response.ResPayload;
 import com.restapi.user.payload.response.ResType;
 import com.restapi.user.payload.response.objects.UserToken;
 import com.restapi.user.repository.UserRepository;
+
+import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import java.util.UUID;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 @Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     @Autowired
     private PasswordEncoder encoder;
@@ -37,7 +46,7 @@ public class UserService {
                 reqUserRegister.getPhone(),
                 reqUserRegister.getAddress(),
                 reqUserRegister.getEmail(),
-                encoder.encode(reqUserRegister.getPassword())
+                encoder.encode(reqUserRegister.getPassword()), null
         );
 
         userRepository.save(user);
@@ -62,5 +71,47 @@ public class UserService {
 
     public ResponseEntity<?> getUsers () {
         return ResponseEntity.ok(userRepository.findAll());
+    }
+    
+    public String generateResetToken() {
+        return UUID.randomUUID().toString();
+    }
+
+    public void sendResetPasswordEmail(User user, String resetToken) throws MessagingException {
+        JavaMailSender javaMailSender = this.javaMailSender;
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+        mimeMessageHelper.setTo(user.getEmail());
+        mimeMessageHelper.setSubject("Reset Password");
+        mimeMessageHelper.setText("Click <a href=\"http://localhost:3000/reset-password?token=" + resetToken + "\">here</a> to reset your password", true);
+        javaMailSender.send(mimeMessage);
+    }
+
+    public ResponseEntity<?> forgetPassword(String email) throws MessagingException {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            return ResponseEntity.ok(new ResMessage("Email not found", ResType.BAD));
+        }
+        String resetToken = generateResetToken();
+        user.setResetToken(resetToken);
+        userRepository.save(user);
+
+        sendResetPasswordEmail(user, resetToken);
+
+        return ResponseEntity.ok(new ResMessage("Password reset email sent successfully", ResType.OK));
+    }
+
+    public ResponseEntity<?> resetPassword(String token, String newPassword) {
+        User user = userRepository.findByResetToken(token);
+
+        if (user == null) {
+            return ResponseEntity.ok(new ResMessage("Invalid reset token", ResType.BAD));
+        }
+
+        user.setPassword(encoder.encode(newPassword));
+        user.setResetToken(null);
+        userRepository.save(user);
+
+        return ResponseEntity.ok(new ResMessage("Password reset successful", ResType.OK));
     }
 }
